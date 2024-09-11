@@ -72,7 +72,7 @@ export function App() {
             <WalletModalProvider>
                 <UIComponent></UIComponent>
                 <Profile></Profile>
-                <SignDemo></SignDemo>
+                {/* <SignDemo></SignDemo> */}
             </WalletModalProvider>
         </WalletProvider>
     );
