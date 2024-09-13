@@ -72,7 +72,7 @@ export function App() {
             <WalletModalProvider>
                 <UIComponent></UIComponent>
                 <Profile></Profile>
-                {/* <SignDemo></SignDemo> */}
+                <SignDemo></SignDemo>
             </WalletModalProvider>
         </WalletProvider>
     );
@@ -135,13 +135,19 @@ function SignDemo() {
 
     async function onSignMessage() {
         const res = await signMessage(message);
+        
         setSignedMessage(res);
+
+        const receiveAddress = await tronWeb.trx.verifyMessageV2(message, res);
+
+        console.log(receiveAddress);
     }
 
     async function onSignTransaction() {
         const transaction = await tronWeb.transactionBuilder.sendTrx(receiver, tronWeb.toSun(0.001), address);
 
         const signedTransaction = await signTransaction(transaction);
+        
         // const signedTransaction = await tronWeb.trx.sign(transaction);
          await tronWeb.trx.sendRawTransaction(signedTransaction);
         setOpen(true);
