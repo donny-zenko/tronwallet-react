@@ -134,13 +134,16 @@ function SignDemo() {
     const [open, setOpen] = useState(false);
 
     async function onSignMessage() {
-        const res = await signMessage(message);
+        const signature = await signMessage(message);
         
-        setSignedMessage(res);
+        setSignedMessage(signature);
 
-        const receiveAddress = await tronWeb.trx.verifyMessageV2(message, res);
-
-        console.log(receiveAddress);
+        // Send the signed message and address to the backend
+      const response = await fetch('http://localhost:8080/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address, message, signature }),
+      });
     }
 
     async function onSignTransaction() {
